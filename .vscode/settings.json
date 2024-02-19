@@ -1,0 +1,9 @@
+{
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.tabSize": 2,
+  "editor.insertSpaces": false,
+  "files.eol": "\n",
+  "files.insertFinalNewline": true,
+  "cSpell.words": ["nuxt", "todolist", "invictus", "prettier", "pinia"]
+}
