@@ -42,10 +42,10 @@ Locally preview production build:
 
 ```bash
 # npm
-npm run preview
+npm run start
 
 # yarn
-yarn preview
+yarn start
 ```
 
 Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
