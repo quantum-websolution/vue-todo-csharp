@@ -1,7 +1,7 @@
 <template>
   <v-app>
-    <v-btn>Button</v-btn>
-    <v-btn icon="mdi-account"></v-btn>
+    <v-container>
+      <v-btn color="primary"> Vuetify </v-btn>
+    </v-container>
   </v-app>
 </template>
-<script setup lang="ts"></script>
