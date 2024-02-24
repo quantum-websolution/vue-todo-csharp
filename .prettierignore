@@ -1,0 +1,23 @@
+# settings files
+.vscode
+.nuxt/
+.output/
+dist/
+node_modules_
+
+
+# lint, ignore files
+.eslintrc.js
+.gitignore
+.prettierignore
+.prettierrc.js
+
+# config files
+nuxt.congig.ts
+tsconfig.json
+
+# package files
+package-lock.json
+yarn.lock
+package.json
+README.md

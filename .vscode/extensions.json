@@ -1,4 +1,9 @@
 {
   // 拡張機能がインストールされていない場合、インストールの推奨を表示
-  "recommendations": ["esbenp.prettier-vscode", "dbaeumer.vscode-eslint"]
+  "recommendations": [
+    "esbenp.prettier-vscode",
+    "dbaeumer.vscode-eslint",
+    "Vue.voler",
+    "Vue.vscode-typescript-vue-plugin"
+  ],
 }
