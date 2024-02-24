@@ -13,5 +13,5 @@
   "editor.tabSize": 2,
   "editor.insertSpaces": false,
   "files.insertFinalNewline": true,
-  "cSpell.words": ["nuxt", "todolist", "invictus", "prettier", "pinia"],
+  "cSpell.words": ["nuxt", "todolist", "invictus", "prettier", "pinia", "nuxi"],
 }
