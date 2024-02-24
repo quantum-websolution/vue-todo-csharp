@@ -1,27 +1,34 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  devtools: { enabled: true },
-  srcDir: "src/",
+  devtools: { enabled: false },
+  srcDir: 'src/',
   app: {
     head: {
-      title: "todolist",
-      htmlAttrs: { lang: "ja" },
+      title: 'todolist',
+      htmlAttrs: { lang: 'ja' },
       meta: [
-        { charset: "utf-8" },
-        { name: "viewport", content: "width-device-width, initial-scale=1" },
-        { hid: "description", name: "description", content: "" },
+        { charset: 'utf-8' },
+        { name: 'viewport', content: 'width-device-width, initial-scale=1' },
+        { hid: 'description', name: 'description', content: '' },
         // {},
         {
-          hid: "robots",
-          name: "robots",
-          content: "noindex, nofollow, noarchive",
+          hid: 'robots',
+          name: 'robots',
+          content: 'noindex, nofollow, noarchive',
         },
       ],
-      link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }],
+      link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
     },
   },
 
-  modules: ["vuetify-nuxt-module", "@pinia/nuxt"],
+  components: [
+    {
+      path: '@/components',
+      pathPrefix: false,
+    },
+  ],
+
+  modules: ['vuetify-nuxt-module', '@pinia/nuxt'],
 
   vuetify: {
     moduleOptions: {
@@ -51,7 +58,7 @@ export default defineNuxtConfig({
     //   },
     // },
     define: {
-      "process.env.DEBUG": false,
+      'process.env.DEBUG': false,
     },
     // // for HMR
     // server: {
@@ -60,4 +67,4 @@ export default defineNuxtConfig({
     //   },
     // },
   },
-});
+})
