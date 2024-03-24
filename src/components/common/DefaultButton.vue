@@ -1,8 +1,8 @@
 <script setup lang="ts">
 interface Props {
   title: string
-  type: string
-  size: string
+  type?: string
+  size?: string
 }
 
 const Props = withDefaults(defineProps<Props>(), {
@@ -12,9 +12,7 @@ const Props = withDefaults(defineProps<Props>(), {
 })
 </script>
 <template>
-  <v-app>
-    <v-container>
-      <v-btn :color="type"> {{ title }} </v-btn>
-    </v-container>
-  </v-app>
+  <div>
+    <v-btn :color="type"> {{ title }} </v-btn>
+  </div>
 </template>
