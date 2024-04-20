@@ -19,6 +19,7 @@
     "vue-router": "^4.3.0"
   },
   "devDependencies": {
-        "vuetify-nuxt-module": "^0.11.0"
+    "json-server": "^0.17.4",
+    "vuetify-nuxt-module": "^0.11.0"
   }
 }
