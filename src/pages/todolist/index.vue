@@ -1,5 +1,5 @@
 <script setup lang="ts">
-// import { todolist } from '@/data/todolist'
+const items = ref<TodolistResponse[]>([])
 const search = ref('')
 
 const headers = [
@@ -17,12 +17,17 @@ const headers = [
   { key: 'isOverdue', title: '期限切れ' },
 ]
 
-// onMounted(async () => {
-//   const { data } = await useFetch('/api/todolist', {
-//     method: 'GET',
-//   })
-//   console.log(data)
-// })
+const { public: publicConfig } = useRuntimeConfig()
+onMounted(async () => {
+  console.log(publicConfig.apiUrl)
+  const { data } = await useFetch(`${publicConfig.apiUrl}/api/todolist`, {
+    method: 'GET',
+  })
+
+  if (data.value) {
+    Object.assign(items.value, data.value)
+  }
+})
 
 const onClick = async () => {
   const result = await $fetch<TodolistResponse[]>('/api/todolist', {
@@ -72,10 +77,10 @@ const onClick = async () => {
       ></v-text-field>
     </template>
 
-    <!-- <v-data-table
+    <v-data-table
       :headers="(headers as any)"
-      :items="todolist"
+      :items="items"
       :search="search"
-    ></v-data-table> -->
+    ></v-data-table>
   </v-card>
 </template>

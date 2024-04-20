@@ -7,7 +7,8 @@
     "dev": "nuxi dev",
     "generate": "nuxi generate",
     "preview": "nuxi preview",
-    "postinstall": "nuxi prepare"
+    "postinstall": "nuxi prepare",
+    "mock": "nuxi dev -p 3030 --dotenv .env.local --inspect & json-server --watch src/data/db.json -p 8000 --routes src/data/route.json"
   },
   "dependencies": {
     "@mdi/font": "^7.4.47",

@@ -20,6 +20,13 @@ export default defineNuxtConfig({
     },
   },
 
+  runtimeConfig: {
+    public: {
+      baseUrl: process.env?.NUXT_BASE_URL,
+      apiUrl: process.env?.NUXT_API_URL,
+    },
+  },
+
   imports: {
     dirs: ['@/types/**'],
   },
