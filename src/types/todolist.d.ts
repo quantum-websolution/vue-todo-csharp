@@ -1,4 +1,4 @@
-type todolistResponse = {
+type TodolistResponse = {
   /** ID **/
   id: number
   /** タイトル **/

@@ -1,4 +1,4 @@
-export const todolist: todolistResponse[] = [
+export const todolist: TodolistResponse[] = [
   {
     id: 1,
     title: '外出1',

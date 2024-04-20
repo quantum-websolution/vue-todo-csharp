@@ -19,6 +19,6 @@
     "vue-router": "^4.3.0"
   },
   "devDependencies": {
-    "vuetify-nuxt-module": "^0.11.0"
+        "vuetify-nuxt-module": "^0.11.0"
   }
 }

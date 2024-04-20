@@ -16,6 +16,21 @@ const headers = [
   { key: 'remarks', title: '備考' },
   { key: 'isOverdue', title: '期限切れ' },
 ]
+
+// onMounted(async () => {
+//   const { data } = await useFetch('/api/todolist', {
+//     method: 'GET',
+//   })
+//   console.log(data)
+// })
+
+const onClick = async () => {
+  const result = await $fetch<TodolistResponse[]>('/api/todolist', {
+    method: 'GET',
+  })
+
+  console.log(result)
+}
 </script>
 <template>
   <v-card class="pa-4">
@@ -38,7 +53,7 @@ const headers = [
             <TextInput label="備考" />
           </v-col>
           <v-col cols="12" md="4" class="d-flex align-center justify-end">
-            <DefaultButton title="登録" type="primary" />
+            <DefaultButton title="登録" type="primary" @click="onClick" />
           </v-col>
         </v-row>
       </v-container>
