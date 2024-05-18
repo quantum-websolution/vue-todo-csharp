@@ -4,11 +4,11 @@
   "type": "module",
   "scripts": {
     "build": "nuxi build",
-    "dev": "nuxi dev",
+    "dev": "nuxi dev -p 3000 --dotenv .env.local",
     "generate": "nuxi generate",
     "preview": "nuxi preview",
     "postinstall": "nuxi prepare",
-    "mock": "nuxi dev -p 3030 --dotenv .env.local --inspect & json-server --watch src/data/db.json -p 8000 --routes src/data/route.json"
+    "mock": "nuxi dev -p 3030 --dotenv .env.mock --inspect & json-server --watch src/data/db.json -p 8000 --routes src/data/route.json"
   },
   "dependencies": {
     "@mdi/font": "^7.4.47",
@@ -20,6 +20,7 @@
     "vue-router": "^4.3.0"
   },
   "devDependencies": {
+    "@vueuse/core": "^10.9.0",
     "json-server": "^0.17.4",
     "vuetify-nuxt-module": "^0.11.0"
   }

@@ -1,6 +1,30 @@
 <script setup lang="ts">
+import { useDateFormat } from '@vueuse/core'
+// 登録する内容
+const title = ref<string>('')
+const detail = ref<string>('')
+const place = ref<string>('')
+const remarks = ref<string>('')
+
+const deadline = ref<Date[]>([])
+const formatDate = ref<string>('')
+
+const updateDate = () => {
+  deadlineDialog.value = false
+  if (!deadline) return
+  formatDate.value = useDateFormat(
+    deadline.value.toString(),
+    'YYYY-MM-DD(dd)hh:mm:ss',
+  ).value
+}
+
+const deadlineDialog = ref(false)
+
+// 一覧の内容を格納する変数
 const items = ref<TodolistResponse[]>([])
-const search = ref('')
+
+// 削除するIDを格納
+const selectedIds = ref<number[]>([])
 
 const headers = [
   {
@@ -18,23 +42,37 @@ const headers = [
 ]
 
 const { public: publicConfig } = useRuntimeConfig()
-onMounted(async () => {
-  console.log(publicConfig.apiUrl)
-  const { data } = await useFetch(`${publicConfig.apiUrl}/api/todolist`, {
+const fetchData = async () => {
+  await $fetch<TodolistResponse[]>(`${publicConfig.apiUrl}/api/todolist`, {
     method: 'GET',
-  })
+  }).then((data) => Object.assign(items.value, data))
+}
 
-  if (data.value) {
-    Object.assign(items.value, data.value)
-  }
+onMounted(async () => {
+  await fetchData()
 })
 
-const onClick = async () => {
-  const result = await $fetch<TodolistResponse[]>('/api/todolist', {
-    method: 'GET',
-  })
+const onClickRegister = async () => {
+  const request = {
+    title: title.value,
+    detail: detail.value,
+    place: place.value,
+    deadline: formatDate.value,
+    remarks: remarks.value,
+  }
+  await $fetch<TodolistResponse[]>(`${publicConfig.apiUrl}/api/todolist`, {
+    method: 'POST',
+    body: JSON.stringify(request),
+  }).then((num) => console.log(num))
+  await fetchData()
+}
 
-  console.log(result)
+const onClickDelete = async () => {
+  await $fetch<TodolistResponse[]>(`${publicConfig.apiUrl}/api/todolist`, {
+    method: 'DELETE',
+    body: JSON.stringify(selectedIds.value),
+  }).then((num) => console.log(num))
+  await fetchData()
 }
 </script>
 <template>
@@ -43,22 +81,43 @@ const onClick = async () => {
       <v-container class="d-flex">
         <v-row>
           <v-col cols="12" md="4">
-            <TextInput label="予定" />
+            <v-text-field clearable label="予定" v-model="title" />
           </v-col>
           <v-col cols="12" md="4">
-            <TextInput label="詳細" />
+            <v-text-field label="詳細" v-model="detail" />
           </v-col>
           <v-col cols="12" md="4">
-            <TextInput label="場所" />
+            <v-text-field label="場所" v-model="place" />
           </v-col>
           <v-col cols="12" md="4">
-            <DateInput label="期限" />
+            <v-spacer></v-spacer>
+            <v-text-field
+              label="期限"
+              readonly
+              v-model="formatDate"
+              @click="deadlineDialog = !deadlineDialog"
+            >
+            </v-text-field>
+
+            <v-dialog v-model="deadlineDialog">
+              <v-date-picker
+                v-model="deadline"
+                @update:model-value="updateDate()"
+              >
+              </v-date-picker>
+            </v-dialog>
+            <v-spacer></v-spacer>
           </v-col>
           <v-col cols="12" md="4">
-            <TextInput label="備考" />
+            <v-text-field label="備考" v-model="remarks" />
           </v-col>
           <v-col cols="12" md="4" class="d-flex align-center justify-end">
-            <DefaultButton title="登録" type="primary" @click="onClick" />
+            <DefaultButton
+              title="登録"
+              type="primary"
+              @click="onClickRegister"
+            />
+            <DefaultButton title="削除" type="primary" @click="onClickDelete" />
           </v-col>
         </v-row>
       </v-container>
@@ -66,21 +125,11 @@ const onClick = async () => {
   </v-card>
 
   <v-card title="予定一覧" flat class="pa-8">
-    <template v-slot:text>
-      <v-text-field
-        v-model="search"
-        label="Search"
-        prepend-inner-icon="mdi-magnify"
-        variant="outlined"
-        hide-details
-        single-line
-      ></v-text-field>
-    </template>
-
     <v-data-table
+      v-model="selectedIds"
       :headers="(headers as any)"
       :items="items"
-      :search="search"
+      show-select
     ></v-data-table>
   </v-card>
 </template>
