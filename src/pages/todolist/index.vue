@@ -115,6 +115,7 @@ const onClickDelete = async () => {
             <DefaultButton
               title="登録"
               type="primary"
+              class="mr-4"
               @click="onClickRegister"
             />
             <DefaultButton title="削除" type="primary" @click="onClickDelete" />
