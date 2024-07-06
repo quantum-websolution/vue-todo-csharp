@@ -14,14 +14,14 @@ const updateDate = () => {
   if (!deadline) return
   formatDate.value = useDateFormat(
     deadline.value.toString(),
-    'YYYY-MM-DD(dd)hh:mm:ss',
+    'YYYY/MM/DD(dd)hh:mm:',
   ).value
 }
 
 const deadlineDialog = ref(false)
 
 // 一覧の内容を格納する変数
-const items = ref<TodolistResponse[]>([])
+const items = ref<Todolist[]>([])
 
 // 削除するIDを格納
 const selectedIds = ref<number[]>([])
@@ -45,7 +45,7 @@ const { public: publicConfig } = useRuntimeConfig()
 const fetchData = async () => {
   await $fetch<TodolistResponse[]>(`${publicConfig.apiUrl}/api/todolist`, {
     method: 'GET',
-  }).then((data) => Object.assign(items.value, data))
+  }).then((data) => Object.assign(items.value, convertTodoResponse(data)))
 }
 
 onMounted(async () => {
@@ -53,23 +53,34 @@ onMounted(async () => {
 })
 
 const onClickRegister = async () => {
-  const request = {
+  const request: CreateTodoRequest = {
     title: title.value,
     detail: detail.value,
     place: place.value,
-    deadline: formatDate.value,
+    deadline: new Date(formatDate.value),
     remarks: remarks.value,
   }
-  await $fetch<TodolistResponse[]>(`${publicConfig.apiUrl}/api/todolist`, {
+  await $fetch(`${publicConfig.apiUrl}/api/todolist`, {
     method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Accept: '*/*',
+    },
+    credentials: 'include',
     body: JSON.stringify(request),
   }).then((num) => console.log(num))
   await fetchData()
 }
 
 const onClickDelete = async () => {
-  await $fetch<TodolistResponse[]>(`${publicConfig.apiUrl}/api/todolist`, {
+  await $fetch(`${publicConfig.apiUrl}/api/todolist`, {
+    mode: 'cors',
     method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+      Accept: '*/*',
+    },
+    credentials: 'include',
     body: JSON.stringify(selectedIds.value),
   }).then((num) => console.log(num))
   await fetchData()
