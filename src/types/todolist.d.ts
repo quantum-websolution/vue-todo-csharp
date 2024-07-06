@@ -1,4 +1,4 @@
-type TodolistResponse = {
+type Todolist = {
   /** ID **/
   id: number
   /** タイトル **/
@@ -15,6 +15,23 @@ type TodolistResponse = {
   isOverdue: boolean
 }
 
+type TodolistResponse = {
+  /** ID **/
+  id: number
+  /** タイトル **/
+  title: string
+  /** 詳細 **/
+  detail: string
+  /** 場所 **/
+  place: string
+  /** 期限 **/
+  deadline: Date
+  /** 備考 **/
+  remarks: string
+  /** 期限切れかどうか **/
+  isOverdue: boolean
+}
+
 type CreateTodoRequest = {
   /** タイトル **/
   title: string
@@ -23,7 +40,7 @@ type CreateTodoRequest = {
   /** 場所 **/
   place: string
   /** 期限 **/
-  deadline: string
+  deadline: Date
   /** 備考 **/
   remarks: string
 }
