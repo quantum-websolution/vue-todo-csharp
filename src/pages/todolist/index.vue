@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { useStoreTodolist } from '@/store/todolist'
 import { useDateFormat } from '@vueuse/core'
 // 登録する内容
 const title = ref<string>('')
@@ -20,9 +21,6 @@ const updateDate = () => {
 
 const deadlineDialog = ref(false)
 
-// 一覧の内容を格納する変数
-const items = ref<Todolist[]>([])
-
 // 削除するIDを格納
 const selectedIds = ref<number[]>([])
 
@@ -41,15 +39,13 @@ const headers = [
   { key: 'isOverdue', title: '期限切れ' },
 ]
 
-const { public: publicConfig } = useRuntimeConfig()
-const fetchData = async () => {
-  await $fetch<TodolistResponse[]>(`${publicConfig.apiUrl}/api/todolist`, {
-    method: 'GET',
-  }).then((data) => Object.assign(items.value, convertTodoResponse(data)))
-}
+const store = useStoreTodolist()
+
+// 一覧の内容を格納する変数
+const items = computed(() => store.todolist)
 
 onMounted(async () => {
-  await fetchData()
+  await store.fetchTodolist()
 })
 
 const onClickRegister = async () => {
@@ -60,30 +56,13 @@ const onClickRegister = async () => {
     deadline: new Date(formatDate.value),
     remarks: remarks.value,
   }
-  await $fetch(`${publicConfig.apiUrl}/api/todolist`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Accept: '*/*',
-    },
-    credentials: 'include',
-    body: JSON.stringify(request),
-  }).then((num) => console.log(num))
-  await fetchData()
+  await store.addTodolist(request)
+  await store.fetchTodolist()
 }
 
 const onClickDelete = async () => {
-  await $fetch(`${publicConfig.apiUrl}/api/todolist`, {
-    mode: 'cors',
-    method: 'DELETE',
-    headers: {
-      'Content-Type': 'application/json',
-      Accept: '*/*',
-    },
-    credentials: 'include',
-    body: JSON.stringify(selectedIds.value),
-  }).then((num) => console.log(num))
-  await fetchData()
+  await store.selectedDelete(selectedIds.value)
+  await store.fetchTodolist()
 }
 </script>
 <template>
@@ -138,6 +117,7 @@ const onClickDelete = async () => {
 
   <v-card title="予定一覧" flat class="pa-8">
     <v-data-table
+      item-value="id"
       v-model="selectedIds"
       :headers="(headers as any)"
       :items="items"
