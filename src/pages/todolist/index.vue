@@ -3,19 +3,19 @@ import { useStoreTodolist } from '@/store/todolist'
 import { useDateFormat } from '@vueuse/core'
 // 登録する内容
 const title = ref<string>('')
-const detail = ref<string>('')
-const place = ref<string>('')
-const remarks = ref<string>('')
+const detail = ref<string | null>(null)
+const place = ref<string | null>(null)
+const remarks = ref<string | null>(null)
 
-const deadline = ref<Date[]>([])
-const formatDate = ref<string>('')
+const deadline = ref<Date[] | null>([])
+const formatDate = ref<string | null>(null)
 
 const updateDate = () => {
   deadlineDialog.value = false
   if (!deadline) return
   formatDate.value = useDateFormat(
-    deadline.value.toString(),
-    'YYYY/MM/DD(dd)hh:mm:',
+    deadline.value?.toString(),
+    'YYYY/MM/DD(dd)hh:mm',
   ).value
 }
 
@@ -53,7 +53,7 @@ const onClickRegister = async () => {
     title: title.value,
     detail: detail.value,
     place: place.value,
-    deadline: new Date(formatDate.value),
+    deadline: formatDate.value ? new Date(formatDate.value) : null,
     remarks: remarks.value,
   }
   await store.addTodolist(request)

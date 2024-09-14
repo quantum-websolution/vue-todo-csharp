@@ -4,13 +4,13 @@ type Todolist = {
   /** タイトル **/
   title: string
   /** 詳細 **/
-  detail: string
+  detail: string | null
   /** 場所 **/
-  place: string
+  place: string | null
   /** 期限 **/
-  deadline: string
+  deadline: string | null
   /** 備考 **/
-  remarks: string
+  remarks: string | null
   /** 期限切れかどうか **/
   isOverdue: boolean
 }
@@ -21,13 +21,13 @@ type TodolistResponse = {
   /** タイトル **/
   title: string
   /** 詳細 **/
-  detail: string
+  detail: string | null
   /** 場所 **/
-  place: string
+  place: string | null
   /** 期限 **/
-  deadline: Date
+  deadline: Date | null
   /** 備考 **/
-  remarks: string
+  remarks: string | null
   /** 期限切れかどうか **/
   isOverdue: boolean
 }
@@ -36,13 +36,13 @@ type CreateTodoRequest = {
   /** タイトル **/
   title: string
   /** 詳細 **/
-  detail: string
+  detail: string | null
   /** 場所 **/
-  place: string
+  place: string | null
   /** 期限 **/
-  deadline: Date
+  deadline: Date | null
   /** 備考 **/
-  remarks: string
+  remarks: string | null
 }
 
 type UpdateTodoRequest = CreateTodoRequest

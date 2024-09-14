@@ -1,8 +1,6 @@
 import { useDateFormat } from '@vueuse/core'
-export const displayDateFormat = (date: Date): string => {
-  return date && typeof date === 'object'
-    ? useDateFormat(date.toString(), 'YYYY/MM/DD(dd)hh:mm').value
-    : ''
+export const displayDateFormat = (date: Date | null): string => {
+  return date ? useDateFormat(date.toString(), 'YYYY/MM/DD(dd)hh:mm').value : ''
 }
 
 export const convertTodoResponse = (
