@@ -3,25 +3,47 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "nuxi build",
+    "build": "nuxt build",
     "dev": "nuxi dev -p 3000 --dotenv .env.local",
-    "generate": "nuxi generate",
-    "preview": "nuxi preview",
-    "postinstall": "nuxi prepare",
-    "mock": "nuxi dev -p 3030 --dotenv .env.mock --inspect & json-server --watch src/data/db.json -p 8000 --routes src/data/route.json"
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare",
+    "mock": "nuxi dev -p 3030 --dotenv .env.mock --inspect & json-server --watch src/data/db.json -p 8000 --routes src/data/route.json",
+    "lint": "eslint --fix './**/*.vue'",
+    "build-storybook": "storybook build",
+    "test": "vitest",
+    "test:ui": "vitest --ui"
   },
   "dependencies": {
     "@mdi/font": "^7.4.47",
+    "apexcharts": "^3.49.1",
+    "date-fns": "^3.6.0",
+    "maska": "^2.1.11",
     "@pinia/nuxt": "^0.5.1",
-    "nuxt": "^3.10.3",
     "pinia": "^2.1.7",
-    "sass": "^1.71.1",
     "vue": "^3.4.19",
-    "vue-router": "^4.3.0"
+    "vue-router": "^4.3.0",
+    "vue3-apexcharts": "^1.5.3"
   },
   "devDependencies": {
     "@vueuse/core": "^10.9.0",
-    "json-server": "^0.17.4",
-    "vuetify-nuxt-module": "^0.11.0"
+    "@mdi/js": "^7.4.47",
+    "@nuxtjs/eslint-config-typescript": "^12.1.0",
+    "@typescript-eslint/eslint-plugin": "^7.0.2",
+    "@typescript-eslint/parser": "^7.0.2",
+    "@vitest/ui": "^1.6.0",
+    "eslint": "^8.56.0",
+    "eslint-plugin-nuxt": "^4.0.0",
+    "eslint-plugin-storybook": "^0.8.0",
+    "nuxt": "^3.11.2",
+    "vite-plugin-vuetify": "^2.0.1",
+    "vitest": "^1.6.0",
+    "vuetify": "^3.6.10",
+    "json-server": "^0.17.4"
+  },
+  "eslintConfig": {
+    "extends": [
+      "plugin:storybook/recommended"
+    ]
   }
 }

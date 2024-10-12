@@ -1,3 +1,5 @@
+import vuetify, { transformAssetUrls } from 'vite-plugin-vuetify'
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   devtools: { enabled: false },
@@ -38,22 +40,26 @@ export default defineNuxtConfig({
     },
   ],
 
-  modules: ['vuetify-nuxt-module', '@pinia/nuxt'],
+  modules: [
+    '@pinia/nuxt',
+    (_options, nuxt) => {
+      nuxt.hooks.hook('vite:extendConfig', (config) => {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-expect-error
+        config.plugins.push(vuetify({ autoImport: true }))
+      })
+    },
+  ],
 
   pinia: {
     storesDirs: ['./stores/**'],
   },
 
-  vuetify: {
-    moduleOptions: {
-      // styles: { configFile: "/styles/settings.scss" },
-    },
-    vuetifyOptions: {
-      /* vuetify options */
-    },
+  build: {
+    transpile: ['vuetify'],
   },
 
-  build: {},
+  plugins: ['~/plugins/vuetify.ts'],
 
   css: [],
 
@@ -64,15 +70,15 @@ export default defineNuxtConfig({
   },
 
   vite: {
-    // css: {
-    //   preprocessorOptions: {
-    //     scss: {
-    //       additionalData: "@import '@assets/styles/variable.scss';",
-    //     },
-    //   },
-    // },
+    vue: {
+      template: {
+        transformAssetUrls,
+      },
+    },
     define: {
       'process.env.DEBUG': false,
     },
   },
+
+  compatibilityDate: '2024-10-04',
 })
